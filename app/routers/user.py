@@ -24,22 +24,12 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 # GET ME (獲取當前登入用戶)
 # ----------------------
 @router.get("/me")
-def get_me(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
-    """
-    1. 網頁右上角會自動蹦出綠色 Authorize 大鎖按鈕。
-    2. FastAPI 會自動檢查有沒有帶 Token，沒帶直接回傳 401。
-    3. 自動削掉 "Bearer "，這裡拿到的 token 直接就是純 JWT 字串。
-    """
-    # 解密 Token 獲取使用者名稱
-    username = get_current_user(token)
+def get_me(current_user: User = Depends(get_current_user)):
 
-    user = db.query(User).filter(User.username == username).first()
-
-    # 安全檢查
-    if not user:
-        raise HTTPException(status_code=404, detail="User not found")
-
-    return {"id": user.id, "username": user.username}
+    return {
+        "id": current_user.id,
+        "username": current_user.username
+    }
 
 
 # ----------------------
