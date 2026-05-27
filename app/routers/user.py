@@ -19,7 +19,6 @@ router = APIRouter()
 # 注意：這裡對應的是 @router.post("/login") 的相對路徑
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
-
 # ----------------------
 # GET ME (獲取當前登入用戶)
 # ----------------------
@@ -30,7 +29,6 @@ def get_me(current_user: User = Depends(get_current_user)):
         "id": current_user.id,
         "username": current_user.username
     }
-
 
 # ----------------------
 # LOGIN (登入換取 Token)
@@ -60,14 +58,12 @@ def login(
     # 回傳標準規範格式，Swagger 大鎖才會自動讀取成功
     return {"access_token": token, "token_type": "bearer"}
 
-
 # ----------------------
 # GET USERS (獲取所有用戶)
 # ----------------------
 @router.get("/users", response_model=List[UserResponse])
 def get_users(db: Session = Depends(get_db)):
     return db.query(User).all()
-
 
 # ----------------------
 # REGISTER (註冊新用戶)
