@@ -1,11 +1,8 @@
 {
   "files.exclude": {
     "**/__pycache__": true,
-    "**/*.pyc": true
-  },
-
-
-  "files.exclude": {
-  "**/*:Zone.Identifier": true
+    "**/*.pyc": true,
+    "**/*:Zone.Identifier": true
   }
+  
 }
