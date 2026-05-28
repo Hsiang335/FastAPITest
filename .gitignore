@@ -3,6 +3,12 @@ __pycache__/
 *.py[codz]
 *$py.class
 
+#git-credential-manager-core
+*:Zone.Identifier
+__pycache__/
+*.pyc
+
+
 # C extensions
 *.so
 

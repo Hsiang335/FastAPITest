@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 
+
 # 建立用（Request）
 class UserCreate(BaseModel):
     name: str

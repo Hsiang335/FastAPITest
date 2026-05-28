@@ -3,8 +3,8 @@ from jose import jwt
 from datetime import datetime, timedelta,timezone
  
 
-from jose import jwt, JWTError
-from fastapi import HTTPException, status
+from jose import  JWTError
+from fastapi import HTTPException
 from fastapi.security import OAuth2PasswordBearer
 from fastapi import Depends
 from app.database.connection import get_db
