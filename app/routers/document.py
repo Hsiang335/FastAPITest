@@ -128,20 +128,43 @@ def update_document(
 
     return document
 
+
+
 # ----------------------
 # GET MY DOCUMENTS
+# Pagination + Search
 # ----------------------
 @router.get(
     "/documents",
     response_model=List[DocumentResponse]
 )
 def get_documents(
+    page: int = 1,
+    limit: int = 5,
+    keyword: str | None = None,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
 
-    documents = db.query(Document).filter(
+    query = db.query(Document).filter(
         Document.owner_id == current_user.id
-    ).all()
+    )
+
+    # Search
+    if keyword:
+
+        query = query.filter(
+            Document.title.ilike(f"%{keyword}%")
+        )
+
+    # Pagination
+    skip = (page - 1) * limit
+
+    documents = (
+        query
+        .offset(skip)
+        .limit(limit)
+        .all()
+    )
 
     return documents
