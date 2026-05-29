@@ -23,7 +23,9 @@ router = APIRouter(
 # ----------------------
 @router.get(
     "/documents",
-    response_model=List[DocumentResponse]
+    response_model=List[DocumentResponse],
+    summary="Get Documents",
+    description="Get current user's documents with pagination and search"
 )
 def get_documents(
     page: int = 1,
@@ -56,12 +58,12 @@ def get_documents(
 
     return documents
 
-# ----------------------
-# CREATE DOCUMENT
-# ----------------------
 @router.post(
     "/documents",
-    response_model=DocumentResponse
+    response_model=DocumentResponse,
+    summary="Create Document",
+    description="Create a new document for current user",
+   
 )
 def create_document(
     document: DocumentCreate,
@@ -86,7 +88,11 @@ def create_document(
 # ----------------------
 # DELETE DOCUMENT
 # ----------------------
-@router.delete("/documents/{document_id}")
+@router.delete(
+    "/documents/{document_id}",
+    summary="Delete Document",
+    description="Delete current user's document"
+)
 def delete_document(
     document_id: int,
     db: Session = Depends(get_db),
@@ -127,7 +133,9 @@ def delete_document(
 # ----------------------
 @router.put(
     "/documents/{document_id}",
-    response_model=DocumentResponse
+    response_model=DocumentResponse,
+    summary="Update Document",
+    description="Update current user's document"
 )
 def update_document(
     document_id: int,

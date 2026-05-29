@@ -25,7 +25,11 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 # ----------------------
 # GET ME (獲取當前登入用戶)
 # ----------------------
-@router.get("/me")
+@router.get(
+    "/me",
+    summary="Get Current User",
+    description="Get current authenticated user information"
+)
 def get_me(current_user: User = Depends(get_current_user)):
 
     return {
@@ -36,7 +40,11 @@ def get_me(current_user: User = Depends(get_current_user)):
 # ----------------------
 # LOGIN (登入換取 Token)
 # ----------------------
-@router.post("/login")
+@router.post(
+    "/login",
+    summary="User Login",
+    description="Login with username and password to get JWT token"
+)
 def login(
     form_data: OAuth2PasswordRequestForm = Depends(),
     db: Session = Depends(get_db),
@@ -71,7 +79,11 @@ def get_users(db: Session = Depends(get_db)):
 # ----------------------
 # REGISTER (註冊新用戶)
 # ----------------------
-@router.post("/register")
+@router.post(
+    "/register",
+    summary="Register User",
+    description="Create a new user account"
+)
 def register(user: UserCreate, db: Session = Depends(get_db)):
     new_user = User(username=user.username, password=hash_password(user.password))
 
