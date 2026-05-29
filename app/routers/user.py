@@ -14,7 +14,9 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 
 
-router = APIRouter()
+router = APIRouter(
+    tags=["Auth"]
+)
 
 # 宣告 OAuth2 規範，告訴 Swagger 你的登入 API 路徑是 "login"
 # 注意：這裡對應的是 @router.post("/login") 的相對路徑

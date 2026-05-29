@@ -11,7 +11,22 @@ class ModelName(str, Enum):
     resnet = "resnet"
     lenet = "lenet"
 
-app = FastAPI()
+app = FastAPI(
+
+    title="FastAPI Portfolio Project",
+
+    description="""
+A production-style FastAPI backend project.
+
+Features:
+- JWT Authentication
+- User System
+- Documents CRUD
+- Pagination & Search
+- PostgreSQL
+- SQLAlchemy ORM
+"""
+)
 
 #把 document API 掛進來。
 app.include_router(document.router)
