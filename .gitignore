@@ -3,6 +3,8 @@ __pycache__/
 *.py[codz]
 *$py.class
 
+.env
+
 #git-credential-manager-core
 *:Zone.Identifier
 __pycache__/
