@@ -23,18 +23,26 @@ services:
     container_name: fastapi_app
     ports:
       - "8000:8000"
+      - "5678:5678"  # 🌟 【升級 1】將容器內的 5678 偵錯埠對接到本機
     depends_on:
       db:
         condition: service_healthy
     env_file:
       - .env
+    environment:
+          PYTHONUNBUFFERED: 1 # 🌟 【升級 2】禁用 Python 緩衝，讓 FastAPI 的 Log 能即時、一字不漏噴在終端機
     volumes:
       - .:/app
-    command: >
-      uvicorn app.main:app
-      --host 0.0.0.0
-      --port 8000
-      --reload
+
+# 🌟 【升級 3】修改啟動指令，讓 debugpy 先在 5678 埠聽候 VS Code 差遣，再啟動 uvicorn
+    # 📝 注意：原本 > 折行語法後面如果有換行，有時會被解析成多個獨立字串導致報錯，這裡改成標準的一行寫法最安全
+    command: python -m debugpy --listen 0.0.0.0:5678 -m uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload      
+  
+    # command: >
+    #   uvicorn app.main:app 
+    #   --host 0.0.0.0
+    #   --port 8000
+    #   --reload
 
 volumes:
   postgres_data:

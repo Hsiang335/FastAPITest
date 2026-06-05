@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from typing import Optional
 
 
 class DocumentCreate(BaseModel):
@@ -23,6 +24,9 @@ class DocumentResponse(BaseModel):
 
 class DocumentUpdate(BaseModel):
 
-    title: str
+    title: Optional[str] = None
 
-    content: str
+    content: Optional[str] = None
+
+    class Config:
+        from_attributes = True

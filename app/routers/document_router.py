@@ -6,12 +6,12 @@ from sqlalchemy.orm import Session
 from app.database.connection import get_db
 from app.models.document import Document
 from app.models.user import User
-from app.schemas.document import (
+from app.schemas.document_schema import (
     DocumentCreate,
     DocumentResponse,
     DocumentUpdate
 )
-from app.services.security import get_current_user
+from app.core.security import get_current_user
 
 router = APIRouter(
     tags=["Documents"]
@@ -163,10 +163,12 @@ def update_document(
             detail="Not authorized"
         )
 
-    # 更新資料
-    document.title = document_data.title
+    # 更新資料（僅在有提供時才覆寫，支援部分更新）
+    if document_data.title is not None:
+        document.title = document_data.title
 
-    document.content = document_data.content
+    if document_data.content is not None:
+        document.content = document_data.content
 
     # 寫入 DB
     db.commit()

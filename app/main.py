@@ -1,10 +1,8 @@
 from enum import Enum
 
 from fastapi import FastAPI
-from app.routers import user
-from app.database.connection import engine
-from app.routers import document
-from app.database.connection import Base
+from app.routers import user_router
+from app.routers import document_router
 
 class ModelName(str, Enum):
     alexnet = "alexnet"
@@ -28,13 +26,5 @@ Features:
 """
 )
 
-#把 document API 掛進來。
-app.include_router(document.router)
-
-#把 user API 掛進來。
-app.include_router(user.router)
-
-# 建立資料表
-Base.metadata.create_all(bind=engine)
-
- 
+app.include_router(document_router.router)
+app.include_router(user_router.router)
